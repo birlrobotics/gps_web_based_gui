@@ -30,27 +30,48 @@ function get_data_from_server() {
                 iteration_dict[iter_no].data = []
                 for (var sample_type in data[iter_no]) {
                     for (var cond_no in data[iter_no][sample_type]) {
-                        sample_num = data[iter_no][sample_type][cond_no].length
-                        for (var i = 0; i < sample_num; i++) {
-                            s = data[iter_no][sample_type][cond_no][i]
-                            args = {
-                                x: s.x,
-                                y: s.y,
-                                z: s.z,
-                                mode: 'lines',
-                                marker: {
-                                        size: 12,
-                                        symbol: 'circle',
+                        if (sample_type == 'pol' || sample_type == 'traj') {
+                            sample_num = data[iter_no][sample_type][cond_no].length
+                            for (var i = 0; i < sample_num; i++) {
+                                s = data[iter_no][sample_type][cond_no][i]
+                                args = {
+                                    x: s.x,
+                                    y: s.y,
+                                    z: s.z,
+                                    mode: 'lines',
+                                    marker: {
+                                            size: 12,
+                                            symbol: 'circle',
+                                        line: {
+                                            color: 'rgb(0,0,0)',
+                                            width: 0
+                                        }
+                                    },
                                     line: {
-                                        color: 'rgb(0,0,0)',
-                                        width: 0
-                                    }
+                                        width: 1
+                                    },
+                                    type: 'scatter3d',
+                                    name: 'iter'+iter_no+'_'+sample_type+'_cond'+cond_no+'_sample'+i
+                                }
+                                iteration_dict[iter_no].data.push(args)
+                            }
+                        }
+                        else if (sample_type == 'target_point') {
+                            s = data[iter_no][sample_type][cond_no]
+                            args = {
+                                x: [s.x],
+                                y: [s.y],
+                                z: [s.z],
+                                mode: 'markers',
+                                marker: {
+                                        size: 4,
+                                        symbol: 'circle',
                                 },
                                 line: {
                                     width: 1
                                 },
                                 type: 'scatter3d',
-                                name: 'iter'+iter_no+'_'+sample_type+'_cond'+cond_no+'_sample'+i
+                                name: 'iter'+iter_no+'_'+sample_type+'_cond'+cond_no
                             }
                             iteration_dict[iter_no].data.push(args)
                         }

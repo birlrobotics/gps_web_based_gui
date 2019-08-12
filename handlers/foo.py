@@ -22,6 +22,8 @@ sys.path.append(os.path.join(
 
 from gps.proto.gps_pb2 import END_EFFECTOR_POSITIONS
 
+import imp
+
 file_name_re = re.compile(r"(pol|traj)_sample_itr_(\d+).pkl")
 number_re = re.compile(r"(all|\d+)")
 
@@ -31,10 +33,8 @@ class FooHandler(BaseHandler):
         self.render("base.html")
 
     def post(self):
-        data_files_dir = realpath(join(options['exp-dir'], 'data_files',))
-        if not isdir(data_files_dir):
-            raise Exception('%s is not a directory'%data_files_dir)    
-        
+        data_files_dir = self._get_data_files_dir() 
+        target_point_list = self._get_target_point()
 
         req = json.loads(self.get_argument('json_req'))
         iter_filter = []
@@ -83,13 +83,33 @@ class FooHandler(BaseHandler):
             if iter_no not in iteration_d:
                 iteration_d[iter_no] = {}
             iteration_d[iter_no][pol] = {}
+            iteration_d[iter_no]['target_point'] = {}
             sample = self._process_pkl(pkl)
             for cond in range(len(sample)):
                 if condition_filter is not None and cond not in condition_filter:
                     continue
                 iteration_d[iter_no][pol][cond] = sample[cond]
 
+                target_point = target_point_list[cond].flatten()
+
+                iteration_d[iter_no]['target_point'][cond] = {
+                    'x': target_point[0],
+                    'y': target_point[1],
+                    'z': target_point[2],
+                }
+
         self.write(json.dumps(iteration_d))
+
+    def _get_target_point(self):
+        hyperparams = imp.load_source('hyperparams', join(options['exp-dir'], 'hyperparams.py'))
+        return hyperparams.ee_pos_tgts
+
+    def _get_data_files_dir(self):
+        data_files_dir = realpath(join(options['exp-dir'], 'data_files',))
+        if not isdir(data_files_dir):
+            raise Exception('%s is not a directory'%data_files_dir)    
+        return data_files_dir
+
 
     def _process_pkl(self, pkl):
         with open(pkl, 'rb') as f:
