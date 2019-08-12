@@ -1,9 +1,35 @@
 <html>
     <head>
-        <title>Tornado Boilerplate</title>
+        <title>GPS Web-based GUI</title>
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+
+        <script src={{ static_url("js/vendor/plotly-1.49.1.min.js") }}></script>
+
+        <script src={{ static_url("js/vendor/jquery.caret.min.js") }}></script>
+        <script src={{ static_url("js/vendor/jquery.tag-editor.min.js") }}></script>
+
+        <link rel="stylesheet" href={{ static_url("css/jquery.tag-editor.css") }}>
+
+        <script src={{ static_url("js/sample_plot.js") }}></script>
+        <script src={{ static_url("js/config_tag.js") }}></script>
+        <script src={{ static_url("js/main.js") }}></script>
     </head>
 
     <body>
-        <h1>It worked!</h1>
+        <div>
+            <h1>Config</h1>
+            <h2>iteration selected (enter space to see all valid inputs)</h2>
+            <textarea id='iter_tag'>test</textarea>
+            <h2>sample type selected (enter space to see all valid inputs)</h2>
+            <textarea id='sample_type_tag'>test</textarea>
+        </div>
+        <div>
+            <h1>Sample plots</h1>
+            <div id='graph'></div>
+        </div>
+        <div>
+            <h1>Cost plots</h1>
+        </div>
     </body>
 </html>
