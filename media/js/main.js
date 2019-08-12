@@ -1,14 +1,37 @@
 $(function() {
     setup_tag_field()
-    console.log(get_iter_tag())    
-    console.log(get_sample_type_tag())    
     plot_iterations(
-        get_fake_sample_data(10, 5, 100) 
+        get_fake_data(10, 5, 100) 
     )
+
+    get_data_from_server()
 })
 
+function getCookie(name) {
+    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+    return r ? r[1] : undefined;
+}
 
-function get_fake_sample_data(iteration_number, sample_number, sample_time_T) {
+function get_data_from_server() {
+    var req = {
+        json_req: JSON.stringify({
+            iter_tag:get_iter_tag(),
+            condition_tag:get_condition_tag(),
+            sample_type_tag:get_sample_type_tag(),
+        }),
+        _xsrf: getCookie("_xsrf"),
+    }
+    
+    $.post(
+        "get_plotting_data_in_json", 
+        req,
+        function(data) {},
+        'json',
+    )
+}
+
+
+function get_fake_data(iteration_number, sample_number, sample_time_T) {
 
     var iteration_dict = {}
     for (var i = 0; i < iteration_number; i++) {
@@ -36,6 +59,23 @@ function get_fake_sample_data(iteration_number, sample_number, sample_time_T) {
             }
             iteration_dict[i].data.push(args)
         }
+        var args = {
+            x: Array.from({length: 1}, () => Math.random()),
+            y: Array.from({length: 1}, () => Math.random()),
+            z: Array.from({length: 1}, () => Math.random()),
+            mode: 'markers',
+            marker: {
+                    size: 4,
+                    symbol: 'circle',
+                    color: '#000000',
+            },
+            line: {
+                width: 1
+            },
+            type: 'scatter3d',
+            name: 'target point',
+        }
+        iteration_dict[i].data.push(args)
     } 
     return iteration_dict
 }

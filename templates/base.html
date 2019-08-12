@@ -21,6 +21,8 @@
             <h1>Config</h1>
             <h2>iteration selected (enter space to see all valid inputs)</h2>
             <textarea id='iter_tag'>test</textarea>
+            <h2>conditions selected (enter space to see all valid inputs)</h2>
+            <textarea id='condition_tag'>test</textarea>
             <h2>sample type selected (enter space to see all valid inputs)</h2>
             <textarea id='sample_type_tag'>test</textarea>
         </div>
@@ -31,5 +33,11 @@
         <div>
             <h1>Cost plots</h1>
         </div>
+
+        <form action="/new_message" method="post">
+          {% module xsrf_form_html() %}
+          <input type="text" name="message"/>
+          <input type="submit" value="Post"/>
+        </form>
     </body>
 </html>

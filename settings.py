@@ -14,6 +14,9 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 define("port", default=8888, help="run on the given port", type=int)
 define("config", default=None, help="tornado config file")
 define("debug", default=False, help="debug mode")
+
+define('exp-dir', type=str, help="path to experiment dir", default=None)
+
 tornado.options.parse_command_line()
 
 MEDIA_ROOT = path(ROOT, 'media')

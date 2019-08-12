@@ -43,7 +43,8 @@ function plot_iterations(iteration_dict){
     ]
     var layout = {
         title: '3D Line Plot',
-        autosize: true,
+        autosize: false,
+        height: 800,
         margin: {
             l: 0,
             r: 0,

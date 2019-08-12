@@ -6,6 +6,12 @@ var iter_tag_source = [
     'iter 3',
 ]
 
+condition_tag_source = [
+    'all',
+    'cond 0',
+    'cond 1',
+]
+
 var sample_type_tag_source = [
     'LinGauss Controller', 
     'Dnn Controller',
@@ -23,6 +29,16 @@ function setup_tag_field() {
         },
     })
 
+    $('#condition_tag').tagEditor({ 
+        initialTags: ['all conditions'], 
+        autocomplete: {
+            autoFocus: true,
+            minLength:0,
+            delay: 0,
+            source: condition_tag_source,
+        },
+    })
+
     $('#sample_type_tag').tagEditor({ 
         initialTags: ['LinGaussController', 'DnnController'], 
         autocomplete: {
@@ -37,6 +53,11 @@ function setup_tag_field() {
 function get_iter_tag() {
     iter_tag = $('#iter_tag').tagEditor('getTags')[0]
     return iter_tag.tags
+}
+
+function get_condition_tag() {
+    condition_tag = $('#condition_tag').tagEditor('getTags')[0]
+    return condition_tag.tags
 }
 
 function get_sample_type_tag() {

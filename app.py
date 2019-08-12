@@ -15,6 +15,9 @@ class GPSWebBasedGUI(tornado.web.Application):
 
 
 def main():
+    if options['exp-dir'] is None:
+        raise Exception('command line argument "exp-dir" is required')    
+
     app = GPSWebBasedGUI()
     http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(options.port)
