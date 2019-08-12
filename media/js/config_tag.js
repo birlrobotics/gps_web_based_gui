@@ -7,7 +7,7 @@ var iter_tag_source = [
 ]
 
 condition_tag_source = [
-    'all',
+    'all conditions',
     'cond 0',
     'cond 1',
 ]
@@ -72,7 +72,7 @@ function setup_tag_field(onChangeCB) {
         sample_type_init_tag = null
     } 
     if (sample_type_init_tag == null) {
-        sample_type_init_tag = ['LinGaussController', 'DnnController']
+        sample_type_init_tag = ['LinGauss Controller', 'Dnn Controller']
     }
 
     $('#sample_type_tag').tagEditor({ 

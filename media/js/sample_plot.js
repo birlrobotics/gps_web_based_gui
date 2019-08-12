@@ -1,5 +1,5 @@
 function plot_iterations(iteration_dict){
-    var data = iteration_dict[0].data
+    var data = JSON.parse(JSON.stringify(iteration_dict[0].data))
     
     var frames = []
     var steps = []
@@ -30,7 +30,6 @@ function plot_iterations(iteration_dict){
         len: 0.95,
         currentvalue: {
           xanchor: "right",
-          prefix: "color: ",
           font: {
             color: "#888",
             size: 20
@@ -70,7 +69,6 @@ function plot_iterations(iteration_dict){
         },
         sliders: sliders,
     };
-    Plotly.purge('graph')
     Plotly.plot(
         'graph', 
         {

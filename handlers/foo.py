@@ -35,6 +35,8 @@ class FooHandler(BaseHandler):
     def post(self):
         data_files_dir = self._get_data_files_dir() 
         target_point_list = self._get_target_point()
+       
+        cond_number = len(target_point_list)
 
         req = json.loads(self.get_argument('json_req'))
         iter_filter = []
@@ -63,9 +65,9 @@ class FooHandler(BaseHandler):
 
         sample_type_filter = []
         for sample_type in req['sample_type_tag']:
-            if sample_type == 'lingausscontroller':
+            if sample_type == 'lingauss controller':
                 sample_type_filter.append('traj')
-            elif sample_type == 'dnncontroller':
+            elif sample_type == 'dnn controller':
                 sample_type_filter.append('pol')
 
         iteration_d = {}
@@ -85,7 +87,7 @@ class FooHandler(BaseHandler):
             iteration_d[iter_no][pol] = {}
             iteration_d[iter_no]['target_point'] = {}
             sample = self._process_pkl(pkl)
-            for cond in range(len(sample)):
+            for cond in range(cond_number):
                 if condition_filter is not None and cond not in condition_filter:
                     continue
                 iteration_d[iter_no][pol][cond] = sample[cond]

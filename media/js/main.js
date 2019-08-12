@@ -24,6 +24,7 @@ function get_data_from_server() {
         "get_plotting_data_in_json", 
         req,
         function(data) {
+            Plotly.purge('graph')
             var iteration_dict = {}
             for (var iter_no in data) {
                 iteration_dict[iter_no] = {}
@@ -32,6 +33,11 @@ function get_data_from_server() {
                     for (var cond_no in data[iter_no][sample_type]) {
                         if (sample_type == 'pol' || sample_type == 'traj') {
                             sample_num = data[iter_no][sample_type][cond_no].length
+                            if (sample_type  == 'pol') {
+                                line_width = 6
+                            } else {
+                                line_width = 3
+                            }
                             for (var i = 0; i < sample_num; i++) {
                                 s = data[iter_no][sample_type][cond_no][i]
                                 args = {
@@ -39,16 +45,8 @@ function get_data_from_server() {
                                     y: s.y,
                                     z: s.z,
                                     mode: 'lines',
-                                    marker: {
-                                            size: 12,
-                                            symbol: 'circle',
-                                        line: {
-                                            color: 'rgb(0,0,0)',
-                                            width: 0
-                                        }
-                                    },
                                     line: {
-                                        width: 1
+                                        width: line_width
                                     },
                                     type: 'scatter3d',
                                     name: 'iter'+iter_no+'_'+sample_type+'_cond'+cond_no+'_sample'+i
