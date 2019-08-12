@@ -4,8 +4,11 @@ $(function() {
 })
 
 function getCookie(name) {
-    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
-    return r ? r[1] : undefined;
+    return $.cookie(name)
+}
+
+function setCookie(key, value) {
+    $.cookie(key, value)
 }
 
 function get_data_from_server() {

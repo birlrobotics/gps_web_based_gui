@@ -19,37 +19,71 @@ var sample_type_tag_source = [
 
 
 function setup_tag_field(onChangeCB) {
+    function tmp() {
+        onChangeCB()
+        $.cookie('iter_init_tag', JSON.stringify(get_iter_tag()))
+        $.cookie('cond_init_tag', JSON.stringify(get_condition_tag()))
+        $.cookie('sample_type_init_tag', JSON.stringify(get_sample_type_tag()))
+    }
+
+    try {
+        iter_init_tag = JSON.parse(getCookie('iter_init_tag'))
+    } catch(err) {
+        iter_init_tag = null
+    }
+    if (iter_init_tag == null) {
+        iter_init_tag = ['all iterations']
+    }
+
     $('#iter_tag').tagEditor({ 
-        initialTags: ['all iterations'] ,
+        initialTags: iter_init_tag,
         autocomplete: {
             autoFocus: true,
             minLength:0,
             delay: 0,
             source: iter_tag_source,
         },
-        onChange:onChangeCB,
+        onChange:tmp,
     })
 
+    try {
+        cond_init_tag = JSON.parse(getCookie('cond_init_tag'))
+    } catch(err) {
+        cond_init_tag = null
+    }
+    if (cond_init_tag == null) {
+        cond_init_tag = ['all conditions']
+    }
+
     $('#condition_tag').tagEditor({ 
-        initialTags: ['all conditions'], 
+        initialTags: cond_init_tag,
         autocomplete: {
             autoFocus: true,
             minLength:0,
             delay: 0,
             source: condition_tag_source,
         },
-        onChange:onChangeCB,
+        onChange:tmp,
     })
 
+    try {
+        sample_type_init_tag = JSON.parse(getCookie('sample_type_init_tag'))
+    } catch(err) {
+        sample_type_init_tag = null
+    } 
+    if (sample_type_init_tag == null) {
+        sample_type_init_tag = ['LinGaussController', 'DnnController']
+    }
+
     $('#sample_type_tag').tagEditor({ 
-        initialTags: ['LinGaussController', 'DnnController'], 
+        initialTags: sample_type_init_tag, 
         autocomplete: {
             autoFocus: true,
             minLength:0,
             delay: 0,
             source: sample_type_tag_source,
         },
-        onChange:onChangeCB,
+        onChange:tmp,
     })
 }
 
