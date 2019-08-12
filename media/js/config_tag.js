@@ -18,7 +18,7 @@ var sample_type_tag_source = [
 ]
 
 
-function setup_tag_field() {
+function setup_tag_field(onChangeCB) {
     $('#iter_tag').tagEditor({ 
         initialTags: ['all iterations'] ,
         autocomplete: {
@@ -27,6 +27,7 @@ function setup_tag_field() {
             delay: 0,
             source: iter_tag_source,
         },
+        onChange:onChangeCB,
     })
 
     $('#condition_tag').tagEditor({ 
@@ -37,6 +38,7 @@ function setup_tag_field() {
             delay: 0,
             source: condition_tag_source,
         },
+        onChange:onChangeCB,
     })
 
     $('#sample_type_tag').tagEditor({ 
@@ -47,6 +49,7 @@ function setup_tag_field() {
             delay: 0,
             source: sample_type_tag_source,
         },
+        onChange:onChangeCB,
     })
 }
 

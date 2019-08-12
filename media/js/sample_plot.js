@@ -70,6 +70,7 @@ function plot_iterations(iteration_dict){
         },
         sliders: sliders,
     };
+    Plotly.purge('graph')
     Plotly.plot(
         'graph', 
         {
